@@ -1,0 +1,11 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="Base.Theme.BeliDee" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">#6200EE</item>
+        <item name="colorOnPrimary">#FFFFFF</item>
+        <item name="colorSurface">#FFFFFF</item>
+        <item name="colorOnSurface">#000000</item>
+        <item name="android:windowBackground">#F5F5F5</item>
+    </style>
+
+    <style name="Theme.BeliDee" parent="Base.Theme.BeliDee" />
+</resources>

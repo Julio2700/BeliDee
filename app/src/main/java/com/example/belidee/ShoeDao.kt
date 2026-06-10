@@ -7,6 +7,7 @@ import androidx.room.Query
 
 @Dao
 interface ShoeDao {
+    // --- KHUSUS KATALOG HOME ---
     @Query("SELECT * FROM shoes")
     fun getAllShoes(): List<ShoeProduct>
 
@@ -15,4 +16,11 @@ interface ShoeDao {
 
     @Query("DELETE FROM shoes")
     fun deleteAll()
+
+    // --- KHUSUS KERANJANG BELANJA (CART) ---
+    @Query("SELECT * FROM cart_items")
+    fun getCartItems(): List<CartItem>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertCartItem(item: CartItem)
 }

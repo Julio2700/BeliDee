@@ -17,4 +17,9 @@
         android:id="@+id/detailFragment"
         android:name="com.example.belidee.DetailFragment"
         android:label="Detail" />
+
+    <fragment
+        android:id="@+id/cartFragment"
+        android:name="com.example.belidee.CartFragment"
+        android:label="CartFragment" />
 </navigation>

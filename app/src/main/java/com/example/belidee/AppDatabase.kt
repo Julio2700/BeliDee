@@ -5,7 +5,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = [ShoeProduct::class], version = 1)
+@Database(entities = [ShoeProduct::class, CartItem::class], version = 2, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun shoeDao(): ShoeDao
 
@@ -19,7 +19,9 @@ abstract class AppDatabase : RoomDatabase() {
                     context.applicationContext,
                     AppDatabase::class.java,
                     "belidee_database"
-                ).build()
+                )
+                    .fallbackToDestructiveMigration() // Mengosongkan data lama secara otomatis jika versi naik
+                    .build()
                 INSTANCE = instance
                 instance
             }

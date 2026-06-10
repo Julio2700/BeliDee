@@ -10,8 +10,14 @@ import com.bumptech.glide.Glide
 
 class ShoeAdapter(
     private val shoes: List<ShoeProduct>,
-    private val onItemClick: (ShoeProduct) -> Unit
+    private val onClick: (ShoeProduct) -> Unit
 ) : RecyclerView.Adapter<ShoeAdapter.ShoeViewHolder>() {
+
+    class ShoeViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        val ivShoe: ImageView = view.findViewById(R.id.ivShoe)
+        val tvTitle: TextView = view.findViewById(R.id.tvTitle)
+        val tvPrice: TextView = view.findViewById(R.id.tvPrice)
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ShoeViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_shoe, parent, false)
@@ -20,25 +26,23 @@ class ShoeAdapter(
 
     override fun onBindViewHolder(holder: ShoeViewHolder, position: Int) {
         val shoe = shoes[position]
-        holder.bind(shoe, onItemClick)
-    }
 
-    override fun getItemCount(): Int = shoes.size
+        // Nama produk
+        holder.tvTitle.text = shoe.title
 
-    class ShoeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val ivShoe: ImageView = itemView.findViewById(R.id.ivShoe)
-        private val tvShoeTitle: TextView = itemView.findViewById(R.id.tvShoeTitle)
-        private val tvShoePrice: TextView = itemView.findViewById(R.id.tvShoePrice)
+        // Format harga biar terlihat elegan seperti Rp. 1.600.000 (disini kita pakai Dollar $ karena data DummyJSON)
+        holder.tvPrice.text = "$ ${shoe.price}"
 
-        fun bind(shoe: ShoeProduct, onItemClick: (ShoeProduct) -> Unit) {
-            tvShoeTitle.text = shoe.title
-            tvShoePrice.text = "$${shoe.price}"
+        // Load gambar sepatu tanpa memotongnya
+        Glide.with(holder.itemView.context)
+            .load(shoe.thumbnail)
+            .into(holder.ivShoe)
 
-            Glide.with(itemView.context)
-                .load(shoe.thumbnail)
-                .into(ivShoe)
-
-            itemView.setOnClickListener { onItemClick(shoe) }
+        // Klik untuk ke halaman Detail
+        holder.itemView.setOnClickListener {
+            onClick(shoe)
         }
     }
+
+    override fun getItemCount() = shoes.size
 }
